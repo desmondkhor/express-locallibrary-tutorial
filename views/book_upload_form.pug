@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  //- h1!= title
+  //- h2 Name: #{author.name} (#{author._id})
+  h2 #[strong Name:] !{book.title}
+  img.className#IdName(src='/images/' + book._id + '.jpg' alt='Book image')
+
+  form(method='POST' enctype="multipart/form-data" action=book.url+'/upload/'+msg)
+
+    .container-fluid
+      //- div.form-group
+      //-   label(for=fileupload) Upload an image for book:
+      //-   input#fileupload(type='file', name="book_image_file")
+      //- button.btn.btn-primary(type='submit') Upload
+
+      //- - const msg = 3;
+      .row
+        .col-md-12
+          case msg
+            //- when 1
+            //-   .success
+            //-     | Photo uploaded successfully.
+            when '2'
+              .error
+                | #{msg}: File size too large.
+            when '3'
+              .error
+                | #{msg}: Invalid file type. Only JPG, PNG, or GIF file are allowed.
+            default
+              - break
+      .row
+        .col-md-12
+          h3 Image File
+          input(type='file' class='form-control' name='book_image_file' required)
+      br
+      button.btn.btn-primary(type='submit') Upload
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

@@ -1,0 +1,51 @@
+extends layout
+
+block content
+
+  h1 #[strong Author:] #{author.name}
+  img.className#IdName(src='/images/' + author._id + '.jpg' alt='Author image')
+
+  p #{author.date_of_birth_formatted} - #{author.date_of_death_formatted}
+  //- p id: #{author._id}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 Books
+
+    dl
+      each book in author_books
+        dt
+          a(href=book.url) !{book.title}
+        dd !{book.summary}
+
+      else
+        p This author has no books.
+
+  hr
+  p
+    //- a(href=author.url+'/delete') Delete Author
+    a(href=author.url+'/delete' class='btn btn-primary' role='button') Delete Author
+  p
+    //- a(href=author.url+'/update') Update Author
+    a(href=author.url+'/update' class='btn btn-primary' role='button') Update Author
+  p
+    a(href=author.url+'/upload/0' class='btn btn-primary' role='button') Upload Author Image
+
+  //- p
+  //-   .container-fluid
+  //-     .row
+  //-       .col-md-12
+  //-         //- - const msg = 1
+  //-         case msg
+  //-           when 1
+  //-             .success
+  //-               | Photo uploaded successfully.
+  //-           when 2
+  //-             .error
+  //-               | File size too large.
+  //-           when 3
+  //-             .error
+  //-               | Invalid file type. Only JPG, PNG, or GIF file are allowed.
+  //-           //- default
+  //-           //-   .unknown
+  //-           //-     | Unknown error.

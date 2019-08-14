@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  //- h1= title
+  //- h2 Name: #{author.name} (#{author._id})
+  h2 #[strong Name:] #{author.name}
+  img.className#IdName(src='/images/' + author._id + '.jpg' alt='Author image')
+
+  form(method='POST' enctype="multipart/form-data" action=author.url+'/upload/'+msg)
+
+    .container-fluid
+      //- div.form-group
+      //-   label(for=fileupload) Upload an image for author:
+      //-   input#fileupload(type='file', name="author_image_file")
+      //- button.btn.btn-primary(type='submit') Upload
+
+      //- - const msg = 3;
+      .row
+        .col-md-12
+          case msg
+            //- when 1
+            //-   .success
+            //-     | Photo uploaded successfully.
+            when '2'
+              .error
+                | #{msg}: File size too large.
+            when '3'
+              .error
+                | #{msg}: Invalid file type. Only JPG, PNG, or GIF file are allowed.
+            default
+              - break
+      //-         .unknown
+      //-           | Unknown error.
+
+      .row
+        .col-md-12
+          //- .file-field.input-field
+            //- .btn.btn-warning
+          h3 Image File
+          input(type='file' class='form-control' name='author_image_file' required)
+            //- .file-path-wrapper
+            //-   input.file-path.validate(class='form-control' type='text')
+
+      //- .row
+      //-   .col-md-12
+      //-     .input-field
+      //-       label(for='caption') Caption
+      //-       input#caption.validate(class='form-control' type='text' name='caption')
+
+      br
+      button.btn.btn-primary(type='submit') Upload
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

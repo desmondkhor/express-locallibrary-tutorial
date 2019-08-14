@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+
+  .container-fluid
+    ul.row
+      each genre in genre_list
+        li.col-xs-6.col-sm-4.col-md-3
+          a(href=genre.url) !{genre.name}
+      else
+        li There are no genres.
